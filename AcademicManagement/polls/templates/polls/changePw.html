@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style type="text/css">
+    p.title{
+      font-weight: bold;
+      font-size: 15pt;
+    }
+    fieldset{
+      border-top-color: initial;
+      border-top-style: initial;
+      border-top-width: 0px;
+      border-right-color: initial;
+      border-right-style: initial;
+      border-right-width: 0px;
+      border-bottom-color: initial;
+      border-bottom-style: initial;
+      border-bottom-width: 0px;
+      border-left-color: initial;
+      border-left-style: initial;
+      border-left-width: 0px;
+      border-image-source: initial;
+      border-image-slice: initial;
+      border-image-width: initial;
+      border-image-outset: initial;
+      border-image-repeat: initial;
+    }
+    #content{
+        padding-top: 32px;
+        padding-right: 51px;
+        padding-bottom: 95px;
+        padding-left: 51px;
+    }
+    .section_pwconfirm{
+      line-height: 14px;
+      width: 650px;
+      margin-top: 0px;
+      margin-right: auto;
+      margin-bottom: 0px;
+      margin-left: auto;
+      padding-top: 32px;
+      padding-right: 29px;
+      padding-bottom: 32px;
+      padding-left: 29px;
+      border-top-color: rgb(218, 218, 218);
+      border-top-style: solid;
+      border-top-width: 1px;
+      border-right-color: rgb(218, 218, 218);
+      border-right-style: solid;
+      border-right-width: 1px;
+      border-bottom-color: rgb(218, 218, 218);
+      border-bottom-style: solid;
+      border-bottom-width: 1px;
+      border-left-color: rgb(218, 218, 218);
+      border-left-style: solid;
+      border-left-width: 1px;
+      border-image-source: initial;
+      border-image-slice: initial;
+      border-image-width: initial;
+      border-image-outset: initial;
+      border-image-repeat: initial;
+      background: #fff;
+    }
+    .contxt{
+      line-height: 19px;
+      letter-spacing: -1px;
+      font-size: 13px;
+    }
+    .contxt_list{
+      margin-top: 8px;
+      padding-left: 5px;
+    }
+    .spc_content{
+      position: relative;;
+      margin-top: 43px;
+    }
+  </style>
+</head>
+<body>
+  <div style="height:730px; width:1475px;">
+    <div id="menu" style="background-color:#EEEEEE;
+    height:730px; width:200px; float:left;">
+      <center>
+        <img src="school.jpg" width="95%">
+      </center>
+      <ul>
+        <li><a href="studentInformation.html">[학적사항]</a></li>
+        <li>[수강과목/시간표]</li>
+        <li><a href="subjectLookup.html">[과목 조회]</a></li>
+        <li><a href="subjectChoose.html">[수강신청]</a></li>
+        <li>[성적조회]</li>
+        <hr>
+        <li><a href="changePw.html">[로그인 암호변경]</a></li>
+        <hr>
+        <li><a href="loginpage.html">[로그아웃]</a></li>
+      </ul>
+    </div>
+    <p class="title">[로그인 암호 변경]</p>
+    <div id="container">
+      <div id="content">
+        <div class="section_pwconfirm">
+          <div class="spc_header">
+            <h2>비밀번호 변경</h2>
+            <p class="contxt contxt_list">
+              현재 비밀번호를 입력한 후 새로 사용할 비밀번호를 입력하세요.
+            </p>
+            <p class="contxt contxt_list">
+              아이디와 같은 비밀번호 주민등록번호, 생일, 학번, 전화번호 등 개인정보와 관련된 숫자, 연속된 숫자, 동일 반복된 숫자 등
+            </p>
+            <p class="contxt contxt_list">
+              다른 사람이 쉽게 알아 낼 수 있는 비밀번호는 사용하지 마세요.
+            </p>
+          </div>
+          <script language="javascript">
+            function check() {
+              if ( !fm.frmPass1.value ) {
+                alert("현재 비밀번호를 입력하세요.")
+                fm.frmPass1.focus()
+                return false
+              }
+              if ( !fm.frmPass2.value ) {
+                alert("새 비밀번호를 입력하세요.")
+                fm.frmPass2.focus()
+                return false
+              }
+              if ( !fm.frmPass3.value ) {
+                alert("새 비밀번호를 다시 한번 입력하세요.")
+                fm.frmPass3.focus()
+                return false
+              }
+              if ( 6 > fm.frmPass2.value.length || fm.frmPass2.value.length > 12 ) {
+                alert("새 비밀번호는 6~12자 이내로 입력하세요.")
+                fm.frmPass2.value = form1.frmPass3.value = ""
+                fm.frmPass2.focus()
+                return false
+              }
+              if ( fm.frmPass2.value != fm.frmPass3.value ) {
+                alert("새 비밀번호를 정확히 입력하세요.")
+                fm.frmPass3.value = ""
+                fm.frmPass3.focus()
+                return false
+              }
+              if ( confirm( "암호를 변경하시겠습니까?" ) ) {
+                fm.submit()
+              }
+            }
+          </script>
+          <div class="spc_content">
+            <form id="fm" name="fm">
+              <p>
+                <label>현재 비밀번호 : </label>
+                <input type="password" name="frmPass1">
+              </p>
+              <p>
+                <label>새 비밀번호 : </label>
+                <input type="password" name="frmPass2">
+              </p>
+              <p>
+                <label>새 비밀번호 확인 : </label>
+                <input type="password" name="frmPass3">
+              </p>
+              <center>
+                <input type="button" value="완료" onclick="check()" class="ui-button
+                  ui-corner-all ui-widget" role="button">
+                  <input type="reset" value="다시입력" class="ui-button
+                    ui-corner-all ui-widget">
+              </center>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

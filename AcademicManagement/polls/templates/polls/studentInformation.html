@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    {% load static %}
+    <div id="container" style="width:1500px">
+      <div id="menu" style="background-color:#EEEEEE;
+      height:730px;width:200px;float:left;">
+        <center>
+          <img src="{% static '/image/school.jpg' %}" width="95%">
+        </center>
+        <ul>
+          <li><a href="{% url 'polls:studentInfo' %}">[학적사항]</a></li>
+          <li>[수강과목/시간표]</li>
+          <li><a href="{% url 'polls:subjectLookUp' %}">[과목 조회]</a></li>
+          <li><a href="{% url 'polls:subjectChoose' %}">[수강신청]</a></li>
+          <li>[성적조회]</li>
+          <hr>
+          <li><a href="changePw.html">[로그인 암호변경]</a></li>
+          <hr>
+          <li><a href="{% url 'polls:logout' %}">[로그아웃]</a></li>
+        </ul>
+      </div>
+      <div id="content" style="background-color:#EEEEEE;
+        height:730;width:1275px;float:right;">[학적정보조회]
+        <div id="information">
+          <table border="1" width="100%">
+            <tr>
+              <td rowspan="9" align="center" width="5%">
+                학적
+                <br>
+                사항
+              </td>
+            <tr>
+              <td class="title" width="8%">사진</td>
+              <td><img src="{% static '/image/coding.jpg' %}" width="95" height="110"></td>
+            </tr>
+            <tr>
+              <td class="title" width="8%">성 명</td>
+              <td colspan="5" align="left">
+                * 한글
+                <input type="text" name="frmStudentName" size="15" value="{{students.username}}" readonly>
+                * 한자
+                <input type="text" name="frmHanjaName" size="15" value="" readonly>
+                * 영문
+                <input type="text" name="frmEngName" size ="30" value="" readonly>
+              </td>
+            </tr>
+            <tr class="height">
+              <td class="title">출신고교</td>
+              <td width="35%">
+                <input type="text" name="frmGogyoName" size="20" value="">
+                소재지 :
+                <input type="text" name="frmGogyoSojae" size="8" value="">
+              </td>
+              <td class="title" width="8%">
+                고교
+                <br>
+                전공
+              </td>
+              <td>
+                <input type="text" name="frmGogyoMajor" value="">
+              </td>
+              <td class="title" width="8%">
+                고교
+                <br>
+                졸업연월
+              </td>
+              <td>
+                <input type="text" name="frmGogyoJolup" size="10" value="">
+              </td>
+            </tr>
+            <tr class="height">
+              <td class="title">출신대학</td>
+              <td>
+                <input type="text" name="frmGogyoName" size="20" value="">
+                소재지 :
+                <input type="text" name="frmGogyoSojae" size="8" value="">
+              </td>
+              <td class="title">
+                대학
+                <br>
+                전공
+              </td>
+              <td>
+                <input type="text" name="frmColMajor" value="">
+              </td>
+              <td class="title">
+                대학
+                <br>
+                졸업연월
+              </td>
+              <td>
+                <input type="text" name="frmColJolDate" size="10" value="">
+                <select name="frmColJol" id="frmCoJol" onchange>
+                  <option value selected="selected"></option>
+                  <option value="재학">재학</option>
+                  <option value="중퇴">중퇴</option>
+                  <option value="졸업">졸업</option>
+                  <option value="수료">수료</option>
+                </select>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% load static %}
+    <script type="text/javascript" src="{% static '/javascript/jquery-3.5.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '/javascript/login.js' %}" ></script>
+    <style type="text/css">
+      #idAdd li{
+        list-style:none;
+        float:left;
+        padding:5px;
+      }
+      #idAdd{
+        cursor:pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div style="width:800px; height:500px; margin: 0 auto; margin-top: 100px;">
+      <div style="width:500px; height:300px; padding-top:260px; padding-left:250px">
+        <form name="form1" method="post" style="width:350px; height:150px;">
+          {% csrf_token %}
+          <center>
+            <table>
+              <tr>
+                <td><strong>학번/사번</strong></td>
+                <td data-th="학번/사번">
+                  <div class="field-wrapper">
+                    <input type="text" class="login-field" name="userSanbun" id="userSanbun" placeholder="Id를 입력하세요">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>비밀번호</strong></td>
+                <td data-th="비밀번호">
+                  <div class="field-wrapper">
+                    <input type="password" class="login-field" name="passwd" id="passwd" placeholder="Password를 입력하세요">
+                  </div>
+                </td>
+              </tr>
+            </table>
+            <input type="submit" value="로그인">
+          </center>
+        </form>
+        <div style="width:350px; height:50px;">
+          <ul id="idAdd">
+            <li class="newProfessor">교직원 등록</li>
+            <li class="findIdPw">아이디/비밀번호 찾기</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

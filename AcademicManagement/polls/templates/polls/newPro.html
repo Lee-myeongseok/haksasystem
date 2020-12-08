@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% load static %}
+  <script src="{% static '/javascript/jquery-3.5.1.min.js' %}"></script>
+  <script src="{% static '/javascript/checkAddr.js' %}"></script>
+  <style type="text/css">
+    body{
+      font-size: 10pt;
+    }
+  </style>
+</head>
+<body>
+  <p class="title"><strong>[교직원 등록]</strong></p>
+  <div style="margin-bottom:10px;">* 사번은 사용자 승인 후 관리자가 알려 드리겠습니다.
+  </div>
+  <form name="newpro" method="post">
+    <table>
+      <tbody>
+        <tr>
+          <td class="title">패스워드</td>
+          <td colspan="5">
+            <input type="password" name="frmPasswd1">
+          </td>
+        </tr>
+        <tr>
+          <td class="title">패스워드 확인</td>
+          <td colspan="5">
+            <input type="password" name="frmPasswd2">
+          </td>
+        </tr>
+        <tr>
+          <td class="title">성 명</td>
+          <td colspan="5">
+            <input type="text" name="frmProName">
+          </td>
+        </tr>
+        <tr>
+          <td class="title">주민등록번호</td>
+          <td colspan="5">
+            <input type="text" name="frmBirthMD" onblur="javascript:
+              this.form.frmBirthMonth.value = frmBirthMD.value.substring(2,4);
+              this.form.frmBirthDay.value = frmBirthMD.value.substring(4,6);"
+              size="6">
+            -
+            <input type="password" name="frmSocialNum" size="6">
+          </td>
+        </tr>
+        <tr>
+          <td class="title">생년월일</td>
+          <td colspan="5">
+            <input type="text" name="frmBirthMonth" size="4" maxlength="2">월
+            <input type="text" name="frmBirthDay" size="4" maxlength="2">일
+          </td>
+        </tr>
+        <tr>
+          <td class="title">소속학과</td>
+          <td>
+            <select name="frmDepartment" id="frmDepartment">
+              <option value="">학과선택</option>
+              <option value="001">컴퓨터공학과</option>
+              <option value="002">기계시스템학과</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td class="title">주 소</td>
+          <td colspan="5">
+              <input type="text" name "frmAddress" id="frmAddress" size="40">
+          </td>
+        </tr>
+        <tr>
+          <td class="title">휴대폰번호</td>
+          <td>
+            <select name="phoneFirst" id="phoneFirst">
+              <option value=""></option>
+              <option value="010">010</option>
+              <option value="011">011</option>
+              <option value="016">016</option>
+              <option value="017">017</option>
+              <option value="019">019</option>
+            </select>
+            -
+            <input type="tel" name="middle_num" size="3">
+            -
+            <input type="tel" name="end_num" size="3">
+          </td>
+        </tr>
+        <tr>
+          <td class="title">E-mail</td>
+          <td>
+            <input type="text" name="frmEmail" value size="30">
+          </td>
+        </tr>
+        <tr>
+          <td colspan="6" class="title">
+            <center>
+              <input type="button" value="등록신청" onclick="checkAddr()" role="button">
+              <input type="reset" value="취소" role="button">
+            </center>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</body>
+</html>

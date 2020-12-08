@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% load static %}
+  <script src="{% static '/javascript/jquery-3.5.1.min.js' %}"></script>
+  <script src="{% static '/javascript/logout.js' %}"></script>
+  <script src="{% static '/javascript/buttonEvent.js' %}" charset="utf-8"></script>
+  <style type="text/css">
+    tr, td{
+      border : 1px solid black;
+    }
+    #subjectTBL{
+      width:775px;
+      height:300px;
+      margin: auto;
+      display: block;
+      border-collapse: collapse;
+      background: white;
+    }
+    td{
+      text-align: center;
+    }
+    th{
+      border : 2px solid black;
+      background-color : blue;
+    }
+
+  </style>
+</head>
+<body>
+  {% load static %}
+  <div style="height:730px; width:1475px;">
+    <div id="menu" style="background-color:#EEEEEE;
+    height:730px; width:200px; float:left;">
+      <center>
+        <img src="{% static '/image/school.jpg' %}" width="95%">
+      </center>
+      <ul>
+        <li><a href="{% url 'polls:studentInfo' %}">[학적사항]</a></li>
+        <li>[수강과목/시간표]</li>
+        <li><a href="{% url 'polls:subjectLookUp' %}">[과목 조회]</a></li>
+        <li><a href="{% url 'polls:subjectChoose' %}">[수강신청]</a></li>
+        <li>[성적조회]</li>
+        <hr>
+        <li><a href="changePw.html">[로그인 암호변경]</a></li>
+        <hr>
+        <li><a href="{% url 'polls:logout' %}">[로그아웃]</a></li>
+      </ul>
+    </div>
+    <center>
+      <div>
+        <select id="subjectCategory" name="subjectCategory">
+          <option value="학과">학과</option>
+          <option value="컴퓨터공학과">컴퓨터공학과</option>
+          <option value="기계시스템학과">기계시스템학과</option>
+          <option value="경영학과">경영학과</option>
+          <option value="교양">교양</option>
+        </select>
+      </div>
+      <script type="text/javascript" charset="utf-8">
+      var tnum = [];
+      var j = 0;
+      {% for depart in department %}
+        {% for fixmajor in fixmajorsubjects %}
+          {% for major in majorsubjects %}
+            {% if major.majorsubjectcode == fixmajor.fixmajorsubjectcode %}
+              {% if major.majorsubjectcode|slice:":3" == depart.departmentcode and major.majorsubjectcode|slice:":3" == "001" and major.majorsubjectcode|slice:"3:5" == "01" %}
+                tnum[j] = {'department':'{{depart.departmentname}}','subject':'{{fixmajor.majorsubjectname}}','score':'{{fixmajor.completescore}}','professor':'{{major.professorname}}','time':'(월요일 14시-16시)','place':'{{major.place}}','total':'{{major.totalmax}}'};
+                j++;
+              {% elif major.majorsubjectcode|slice:":3" == depart.departmentcode and major.majorsubjectcode|slice:":3" == "002" and major.majorsubjectcode|slice:"3:5" == "02" %}
+                tnum[j] = {'department':'{{depart.departmentname}}','subject':'{{fixmajor.majorsubjectname}}','score':'{{fixmajor.completescore}}','professor':'{{major.professorname}}','time':'(월요일 14시-16시)','place':'{{major.place}}','total':'{{major.totalmax}}'};
+                j++;
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      {% endfor %}
+
+      {% for depart in department %}
+        {% for fixculture in fixculturesubjects %}
+          {% for culture in culturesubjects %}
+            {% if culture.culturesubjectcode == fixculture.fixculturesubjectcode %}
+              {% if culture.culturesubjectcode|slice:":3" == depart.departmentcode and culture.culturesubjectcode|slice:":3" == "100" and culture.culturesubjectcode|slice:"3:5" == "03" %}
+                tnum[j] = {'department':'{{depart.departmentname}}','subject':'{{fixculture.culturesubjectname}}','score':'{{fixculture.completescore}}','professor':'{{culture.professorname}}','time':'(월요일 14시-16시)','place':'{{culture.place}}','total':'{{culture.totalmax}}'};
+                j++;
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      {% endfor %}
+       document.write("<table style=\"padding-top:220px;\">");
+        document.write("<table id=\"subjectTBL\" style=\"overflow:auto;\">");
+          document.write("<th>"+"희망"+"<br>"+"과목"+"</th>");
+          document.write("<th>"+"학과"+"</th>");
+          document.write("<th>"+"과목명"+"</th>");
+          document.write("<th>"+"학점"+"</th>");
+          document.write("<th>"+"담당교수"+"</th>");
+          document.write("<th>"+"강의시간"+"</th>");
+          document.write("<th>"+"강의실"+"</th>");
+          document.write("<th>"+"총인원"+"</th>");
+
+          for(i = 0; i < tnum.length; i++)
+          {
+             document.write("<tr>");
+             document.write("<td style=\"width:100px\">"+"<input type=\"button\" class=\"hope_subject\" value=\"수강신청\" />"+"</td>")
+             document.write("<td style=\"width:120px\">"+tnum[i].department+"</td>");
+             document.write("<td style=\"width:120px\">"+tnum[i].subject+"</td>");
+             document.write("<td style=\"width:40px\">"+tnum[i].score+"</td>");
+             document.write("<td style=\"width:80px\">"+tnum[i].professor+"</td>");
+             document.write("<td style=\"width:150px\">"+tnum[i].time+"</td>");
+             document.write("<td style=\"width:70px\">"+tnum[i].place+"</td>");
+             document.write("<td style=\"width:50px\">"+tnum[i].total+"</td>");
+            document.write("</tr>");
+          }
+          document.write("</table>");
+        document.write("</table>");
+
+      $("#subjectCategory").change(function(){
+        var selectCategory = $("#subjectCategory option:selected").val();
+        var output = "<tbody><tr><th>"+"희망"+"<br>"+"과목"+"</th>"+"<th>"+"학과"+"</th>"+"<th>"+"과목명"+"</th>"+"<th>"+"학점"+"</th>"+
+         "<th>"+"담당교수"+"</th>"+"<th>"+"강의시간"+"</th>"+"<th>"+"강의실"+"</th>"+"<th>"+"총인원"+"</th></tr>";
+
+         for(i = 0; i < tnum.length; i++)
+         {
+           if(selectCategory == tnum[i].department)
+           {
+            output += "<tr><td style=\"width:100px\"><input type=\"button\" class=\"hope_subject\" value=\"수강신청\" /></td>";
+            output += "<td style=\"width:120px\">" + tnum[i].department + "</td>";
+            output += "<td style=\"width:120px\">"+tnum[i].subject+"</td>";
+            output += "<td style=\"width:40px\">"+tnum[i].score+"</td>";
+            output += "<td style=\"width:80px\">"+tnum[i].professor+"</td>";
+            output += "<td style=\"width:150px\">"+tnum[i].time+"</td>";
+            output += "<td style=\"width:70px\">"+tnum[i].place+"</td>";
+            output += "<td style=\"width:70px\">"+tnum[i].total+"</td></tr>";
+           }
+           else if(selectCategory == "학과")
+           {
+            output += "<tr><td style=\"width:100px\"><input type=\"button\" class=\"hope_subject\" value=\"수강신청\" /></td>";
+            output += "<td style=\"width:120px\">" + tnum[i].department + "</td>";
+            output += "<td style=\"width:120px\">"+tnum[i].subject+"</td>";
+            output += "<td style=\"width:40px\">"+tnum[i].score+"</td>";
+            output += "<td style=\"width:80px\">"+tnum[i].professor+"</td>";
+            output += "<td style=\"width:150px\">"+tnum[i].time+"</td>";
+            output += "<td style=\"width:70px\">"+tnum[i].place+"</td>";
+            output += "<td style=\"width:70px\">"+tnum[i].total+"</td></tr>";
+           }
+         }
+         output += "</tbody>"
+        $("#subjectTBL").html(output);
+      })
+      </script>
+    </center>
+  </div>
+</body>
+</html>
