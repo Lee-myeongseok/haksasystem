@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% load static %}
+    <script src="{% static '/javascript/jquery-3.5.1.min.js' %}"></script>
+    <script src="{% static '/javascript/logout.js' %}"></script>
+    <style type="text/css">
+      tr, td{
+        border : 1px solid black;
+      }
+      #chooseSubjectTBL{
+        width:775px;
+        height:300px;
+        margin: auto;
+        display: block;
+        border-collapse: collapse;
+        background: white;
+      }
+      td{
+        text-align: center;
+      }
+      th{
+        border : 2px solid black;
+        background-color : #00BFFF;
+      }
+    </style>
+  </head>
+  <body>
+    {% load static %}
+    <div style="height:730px; width:1475px;">
+      <div id="menu" style="background-color:#EEEEEE;
+      height:730px;width:200px;float:left;">
+        <center>
+          <img src="{% static '/image/school.jpg' %}" width="95%">
+        </center>
+        <ul>
+          <li><a href="{% url 'polls:studentInfo' %}">[학적사항]</a></li>
+          <li>[수강과목/시간표]</li>
+          <li><a href="{% url 'polls:subjectLookUp' %}">[과목 조회]</a></li>
+          <li><a href="{% url 'polls:subjectChoose' %}">[수강신청]</a></li>
+          <li>[성적조회]</li>
+          <hr>
+          <li><a href="changePw.html">[로그인 암호변경]</a></li>
+          <hr>
+          <li><a href="{% url 'polls:logout' %}">[로그아웃]</a></li>
+        </ul>
+      </div>
+      <center>
+        <script type="text/javascript" charset="utf-8">
+        var cnum = [];
+        var j = 0;
+        var flag = false;
+
+        {% autoescape off %}
+          {% if basketsubjects %}
+            {% for csubject in basketsubjects %}
+              cnum[j] = {'department':'{{csubject.department}}','subject':'{{csubject.subject}}','score':'{{csubject.score}}','professor':'{{csubject.professor}}','time':'{{csubject.time}}','place':'{{csubject.place}}','nowmember':'{{csubject.nowmember}}', 'total':'{{csubject.total}}'};
+              j++;
+            {% endfor %}
+          {% endif %}
+        {% endautoescape %}
+
+        document.write("<table style=\"padding-top:220px;\">");
+          document.write("<table id=\"chooseSubjectTBL\" style=\"overflow:auto;\">");
+            document.write("<th>"+"희망"+"<br>"+"과목"+"</th>");
+            document.write("<th>"+"학과"+"</th>");
+            document.write("<th>"+"과목명"+"</th>");
+            document.write("<th>"+"학점"+"</th>");
+            document.write("<th>"+"담당교수"+"</th>");
+            document.write("<th>"+"강의시간"+"</th>");
+            document.write("<th>"+"강의실"+"</th>");
+            document.write("<th>"+"신청인원"+"</th>");
+            document.write("<th>"+"총인원"+"</th>");
+
+            for(i = 0; i < cnum.length; i++)
+            {
+               document.write("<tr>");
+               document.write("<td style=\"width:100px\">"+"<input type=\"button\" class=\"select_subject\" value=\"수강신청\" />"+"</td>");
+               document.write("<td style=\"width:120px\">"+cnum[i].department+"</td>");
+               document.write("<td style=\"width:120px\">"+cnum[i].subject+"</td>");
+               document.write("<td style=\"width:40px\">"+cnum[i].score+"</td>");
+               document.write("<td style=\"width:80px\">"+cnum[i].professor+"</td>");
+               document.write("<td style=\"width:150px\">"+cnum[i].time+"</td>");
+               document.write("<td style=\"width:70px\">"+cnum[i].place+"</td>");
+               document.write("<td style=\"width:70px\">"+cnum[i].nowmember+"</td>");
+               document.write("<td style=\"width:50px\">"+cnum[i].total+"</td>");
+              document.write("</tr>");
+            }
+
+          document.write("</table>");
+        document.write("</table>");
+
+
+          $(document).off("click").on("click", ".select_subject", function(){
+            if(!flag){
+              alert("수강 신청이 완료되었습니다.");
+
+              var subjectArr = new Array();
+              var tr = $(this).parent().parent();
+              var td = tr.children();
+
+              td.each(function(i){
+              subjectArr.push(td.eq(i).text());
+              });
+
+              var jsonString = JSON.stringify(subjectArr);
+              $.ajax({
+                type : "POST",
+                url : 'http://127.0.0.1:8000/polls/choose/',
+                data : jsonString,
+                dataType : 'json',
+                error : function(xhr, status, error){
+              }
+             });
+            }
+            else{
+              alert("수강 신청이 실패되었습니다. (중복신청)");
+
+              var subjectArr = new Array();
+              subjectArr.push("1");
+              var jsonString = JSON.stringify(subjectArr);
+              $.ajax({
+                type : "POST",
+                url : 'http://127.0.0.1:8000/polls/choose/',
+                data : jsonString,
+                dataType : 'json',
+                error : function(xhr, status, error){
+              }
+             });
+            }
+          })
+        </script>
+      </center>
+    </div>
+  </body>
+</html>

@@ -74,11 +74,42 @@ class AuthUserUserPermissions(models.Model):
         unique_together = (('user', 'permission'),)
 
 
+class Basket1Tbl(models.Model):
+    department = models.CharField(max_length=20)
+    subject = models.CharField(max_length=20)
+    score = models.SmallIntegerField()
+    professor = models.CharField(max_length=10)
+    time = models.CharField(max_length=30)
+    place = models.CharField(max_length=10)
+    nowmember = models.SmallIntegerField()
+    total = models.SmallIntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'basket1tbl'
+
+
+class Basket2Tbl(models.Model):
+    department = models.CharField(max_length=20)
+    subject = models.CharField(max_length=20)
+    score = models.SmallIntegerField()
+    professor = models.CharField(max_length=10)
+    time = models.CharField(max_length=30)
+    place = models.CharField(max_length=10)
+    nowmember = models.SmallIntegerField()
+    total = models.SmallIntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'basket2tbl'
+
+
 class Culturesubjecttbl(models.Model):
     culturesubjectcode = models.CharField(max_length=5)
     subjecttimecode = models.CharField(max_length=20)
     place = models.CharField(max_length=10)
     professorname = models.CharField(max_length=10)
+    nowmember = models.SmallIntegerField()
     totalmax = models.SmallIntegerField()
 
     class Meta:
@@ -174,6 +205,7 @@ class Majorsubjecttbl(models.Model):
     subjecttimecode = models.CharField(max_length=20)
     place = models.CharField(max_length=10)
     professorname = models.CharField(max_length=10)
+    nowmember = models.SmallIntegerField()
     totalmax = models.SmallIntegerField()
 
     class Meta:
