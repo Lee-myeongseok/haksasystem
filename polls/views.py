@@ -66,12 +66,23 @@ class StudentinfoView(View):
         return render(request, self.template_name, {'students': students})
 
 
+class Schedule(View):
+    template_name = 'polls/schedule.html'
+
+    def get(self, request, *args, **kwargs):
+        loginuser = request.session['user']
+
+        context = {'loginuser': loginuser}
+
+        return render(request, self.template_name, context=context)
+
+
 @method_decorator(csrf_exempt, name='dispatch')
 class SubjectLookUpView(View):
     template_name = 'polls/subjectLookUp.html'
 
     def get(self, request, *args, **kwargs):
-        loginuser= request.session['user']
+        loginuser = request.session['user']
         user = get_object_or_404(Logintbl, pk=loginuser)
         fixmajorsubjects = Fixmajorsubjecttbl.objects.all()
         fixculturesubjects = Fixculturesubjecttbl.objects.all()
@@ -162,78 +173,113 @@ class SubjectChooseView(View):
         elif loginuser == '20032094':
             basketsubjects = Basket2Tbl.objects.all()
 
-        if subjectdata[0] == "":
+        if subjectdata[0] == "-1":
+            pass
+        elif subjectdata[0] != "":
             if loginuser == '2015032094':
-                try:
-                    Score1Tbl.objects.get(subjectname=subjectdata[2])
-                except:
-                    scores = Score1Tbl()
-                    scores.yearsemester = "0" + str(students.grade) + "01"
-                    if subjectdata[2] == '컴퓨터활용':
-                        scores.subjectcode = "10003"
-                    elif subjectdata[2] == 'C언어의 기초':
-                        scores.subjectcode = '00101'
-                    scores.subjectname = subjectdata[2]
-                    scores.rating = ""
-                    scores.numrating = 0
-                    scores.save()
-
-                    if subjectdata[1] == '교양':
-                        if subjectdata[2] == '컴퓨터활용':
-                            select_subject = Culturesubjecttbl.objects.get(culturesubjectcode='10003')
-                            select_subject.nowmember += 1
-                            select_subject.save()
-
-                            basket_subject = Basket1Tbl.objects.get(subject=subjectdata[2])
-                            basket_subject.nowmember += 1
-                            basket_subject.save()
-                        else:
-                            pass
-                    else:
-                        if subjectdata[2] == 'C언어의 기초':
-                            select_subject = Majorsubjecttbl.objects.get(majorsubjectcode='00101')
-                            select_subject.nowmember += 1
-                            select_subject.save()
-
-                            basket_subject = Basket1Tbl.objects.get(subject=subjectdata[2])
-                            basket_subject.nowmember += 1
-                            basket_subject.save()
-                        else:
-                            pass
+                for subject_name in subjectdata:
+                    basketsubject = Basket1Tbl.objects.get(subject=subject_name)
+                    basketsubject.delete()
             elif loginuser == '20032094':
-                try:
-                    Score2Tbl.objects.get(subjectname=subjectdata[2])
-                except:
-                    scores = Score2Tbl()
-                    scores.yearsemester = "0" + str(students.grade) + "01"
-                    scores.subjectcode = ""
-                    scores.subjectname = subjectdata[2]
-                    scores.rating = ""
-                    scores.numrating = 0
-                    scores.save()
+                print(subjectdata)
+                for subject_name in subjectdata:
+                    basketsubject = Basket2Tbl.objects.get(subject=subject_name)
+                    basketsubject.delete()
+        else:
+            try:
+                if subjectdata[1] == "":
+                    if loginuser == '2015032094':
+                        try:
+                            Score1Tbl.objects.get(subjectname=subjectdata[3])
+                        except:
+                            scores = Score1Tbl()
+                            scores.yearsemester = "0" + str(students.grade) + "01"
+                            if subjectdata[3] == '컴퓨터활용':
+                                scores.subjectcode = "10003"
+                            elif subjectdata[3] == 'C언어의 기초':
+                                scores.subjectcode = '00101'
+                            scores.subjectname = subjectdata[3]
+                            scores.rating = ""
+                            scores.numrating = 0
+                            scores.save()
 
-                    if subjectdata[1] == '교양':
-                        if subjectdata[2] == '컴퓨터활용':
-                            select_subject = Culturesubjecttbl.objects.get(culturesubjectcode='10003')
-                            select_subject.nowmember += 1
-                            select_subject.save()
+                            if subjectdata[2] == '교양':
+                                if subjectdata[3] == '컴퓨터활용':
+                                    select_subject = Culturesubjecttbl.objects.get(culturesubjectcode='10003')
+                                    select_subject.nowmember += 1
+                                    select_subject.save()
 
-                            basket_subject = Basket1Tbl.objects.get(subject=subjectdata[2])
-                            basket_subject.nowmember += 1
-                            basket_subject.save()
-                        else:
-                            pass
-                    else:
-                        if subjectdata[2] == 'C언어의 기초':
-                            select_subject = Majorsubjecttbl.objects.get(majorsubjectcode='00101')
-                            select_subject.nowmember += 1
-                            select_subject.save()
+                                    basket_subject = Basket1Tbl.objects.get(subject=subjectdata[3])
+                                    basket_subject.nowmember += 1
+                                    basket_subject.save()
+                                    basket_subject2 = Basket2Tbl.objects.get(subject=subjectdata[3])
+                                    basket_subject2.nowmember += 1
+                                    basket_subject2.save()
+                                else:
+                                    pass
+                            else:
+                                if subjectdata[3] == 'C언어의 기초':
+                                    select_subject = Majorsubjecttbl.objects.get(majorsubjectcode='00101')
+                                    select_subject.nowmember += 1
+                                    select_subject.save()
 
-                            basket_subject = Basket1Tbl.objects.get(subject=subjectdata[2])
-                            basket_subject.nowmember += 1
-                            basket_subject.save()
-                        else:
-                            pass
+                                    basket_subject = Basket1Tbl.objects.get(subject=subjectdata[3])
+                                    basket_subject.nowmember += 1
+                                    basket_subject.save()
+                                    basket_subject2 = Basket2Tbl.objects.get(subject=subjectdata[3])
+                                    basket_subject2.nowmember += 1
+                                    basket_subject2.save()
+                                else:
+                                    pass
+                    elif loginuser == '20032094':
+                        try:
+                            Score2Tbl.objects.get(subjectname=subjectdata[3])
+                        except:
+                            scores = Score2Tbl()
+                            scores.yearsemester = "0" + str(students.grade) + "01"
+                            if subjectdata[3] == '컴퓨터활용':
+                                scores.subjectcode = "10003"
+                            elif subjectdata[3] == 'C언어의 기초':
+                                scores.subjectcode = '00101'
+                            scores.subjectname = subjectdata[3]
+                            scores.rating = ""
+                            scores.numrating = 0
+                            scores.save()
+
+                            if subjectdata[2] == '교양':
+                                if subjectdata[3] == '컴퓨터활용':
+                                    select_subject = Culturesubjecttbl.objects.get(culturesubjectcode='10003')
+                                    select_subject.nowmember += 1
+                                    select_subject.save()
+
+                                    basket_subject = Basket1Tbl.objects.get(subject=subjectdata[3])
+                                    basket_subject.nowmember += 1
+                                    basket_subject.save()
+                                    basket_subject2 = Basket2Tbl.objects.get(subject=subjectdata[3])
+                                    basket_subject2.nowmember += 1
+                                    basket_subject2.save()
+                                else:
+                                    pass
+                            else:
+                                if subjectdata[3] == 'C언어의 기초':
+                                    select_subject = Majorsubjecttbl.objects.get(majorsubjectcode='00101')
+                                    select_subject.nowmember += 1
+                                    select_subject.save()
+
+                                    basket_subject = Basket1Tbl.objects.get(subject=subjectdata[3])
+                                    basket_subject.nowmember += 1
+                                    basket_subject.save()
+                                    basket_subject2 = Basket2Tbl.objects.get(subject=subjectdata[3])
+                                    basket_subject2.nowmember += 1
+                                    basket_subject2.save()
+                                else:
+                                    pass
+
+                else:
+                    pass
+
+            except IndexError:
+                pass
 
         context = {'user': user, 'basketsubjects': basketsubjects}
 
