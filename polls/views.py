@@ -319,3 +319,52 @@ class AddProfessor(View):
 
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
+
+
+class StudentInfo(View):
+    template_name = 'student/info.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+
+class ScheduleInfo(View):
+    template_name = 'student/schedule.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+
+class GradeInfo(View):
+    template_name = 'student/grade.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+
+class SubjectInfo(View):
+    template_name = 'student/subject.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+
+class SubjectRequest(View):
+    template_name = 'student/subjectrequest.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+
+class ChangePwStudent(View):
+    template_name = 'student/changepw.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+
+class InfoReqeustStudent(View):
+    template_name = 'student/inforequest.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
