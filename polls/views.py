@@ -291,3 +291,10 @@ class LogoutView(View):
     def get(self, request, *args, **kwargs):
         request.session.pop('user')
         return HttpResponseRedirect(reverse('polls:loginpage'))
+
+
+class NewLoginView(View):
+    template_name = 'polls/login.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)

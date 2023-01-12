@@ -2,6 +2,7 @@ from django.urls import path
 from polls import views
 from .views import LoginView, StudentinfoView, SubjectLookUpView, SubjectChooseView, LogoutView
 from .views import NewproView, FindidpwView, Schedule
+from .views import NewLoginView
 from django.views.decorators.csrf import csrf_exempt
 
 app_name = 'polls'
@@ -15,4 +16,6 @@ urlpatterns = [
     path('subjectlookup/', SubjectLookUpView.as_view(), name="subjectLookUp"),
     path('choose/', SubjectChooseView.as_view(), name="subjectChoose"),
     path('logout/', LogoutView.as_view(), name="logout"),
+
+    path('login/', NewLoginView.as_view(), name="login"),
 ]
