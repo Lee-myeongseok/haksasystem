@@ -298,3 +298,24 @@ class NewLoginView(View):
 
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
+
+
+class FindUserInfo(View):
+    template_name = 'polls/finduserinfo.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+
+class UserInfo(View):
+    template_name = 'polls/userinfo.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+
+
+class AddProfessor(View):
+    template_name = 'polls/addprofessor.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
